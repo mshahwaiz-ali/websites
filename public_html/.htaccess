@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Branded error page
+ErrorDocument 404 /404.html
+
 # Force HTTPS
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
