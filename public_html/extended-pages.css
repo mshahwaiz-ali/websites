@@ -9,7 +9,7 @@
 .showcase-card:hover img{transform:scale(1.035)}
 .showcase-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,20,31,.05) 24%,rgba(6,20,31,.88) 100%)}
 .showcase-card-content{position:absolute;z-index:2;inset:auto 0 0;padding:30px}
-.showcase-card-content span{display:block;margin-bottom:8px;color:#bfe7ff;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.showcase-card-content span{display:block;margin-bottom:8px;color:#b8ccd7;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .showcase-card-content h2{margin:0 0 10px;font-size:clamp(28px,3vw,42px);line-height:1.05;letter-spacing:-.035em}
 .showcase-card-content p{max-width:620px;margin:0;color:#d6e1e8;font-size:14px}
 .partner-feature-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -45,7 +45,7 @@
 .home-showcase-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,16,24,.03) 25%,rgba(5,16,24,.9) 100%);z-index:1}
 .home-showcase-card:hover img{transform:scale(1.035)}
 .home-showcase-content{position:absolute;z-index:2;inset:auto 0 0;padding:28px}
-.home-showcase-content span{display:block;margin-bottom:8px;color:#bfe7ff;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.home-showcase-content span{display:block;margin-bottom:8px;color:#b8ccd7;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .home-showcase-content h3{margin:0 0 10px;font-size:clamp(28px,3vw,42px);line-height:1.05;letter-spacing:-.035em}
 .home-showcase-content p{max-width:620px;margin:0;color:#d8e3e9;font-size:14px}
 
@@ -75,6 +75,17 @@ img{height:auto}
 .page-hero-card{min-height:360px}
 .partner-logo img,.partner-feature img{object-fit:contain}
 button:disabled{cursor:wait;opacity:.68;transform:none!important}
+
+/* Final palette: premium industrial blue, deliberately desaturated. */
+:root{
+  --blue-700:#285f7a;
+  --blue-600:#36748f;
+  --blue-500:#538ba4;
+  --blue-300:#9bb9c8;
+}
+.btn-primary{box-shadow:0 10px 24px rgba(54,116,143,.18)}
+.btn-primary:hover{box-shadow:0 14px 30px rgba(40,95,122,.22)}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{box-shadow:0 0 0 4px rgba(54,116,143,.09)}
 
 @media(max-width:900px){
   .showcase-hero-grid,.ecosystem-copy,.managed-support-grid{grid-template-columns:1fr}
