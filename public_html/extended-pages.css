@@ -1,4 +1,4 @@
-/* MHS Technologies — supporting pages */
+/* MHS Technologies — supporting pages + final production polish */
 .showcase-hero{padding:calc(var(--header-h) + 120px) 0 96px;color:#fff;background:var(--navy-950)}
 .showcase-hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:72px;align-items:end}
 .showcase-hero-media{min-height:420px;overflow:hidden;border-radius:20px;background:var(--navy-900)}
@@ -14,7 +14,86 @@
 .showcase-card-content p{max-width:620px;margin:0;color:#d6e1e8;font-size:14px}
 .partner-feature-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .partner-feature{min-height:210px;padding:34px;display:grid;place-items:center;border-right:1px solid var(--line);background:#fff}
-.partner-feature:last-child{border-right:0}.partner-feature img{max-width:150px;max-height:58px;filter:grayscale(1);opacity:.72;transition:filter .2s ease,opacity .2s ease,transform .2s ease}.partner-feature:hover img{filter:none;opacity:1;transform:translateY(-2px)}
-.ecosystem-copy{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:start}.ecosystem-copy p{margin:0 0 20px;color:var(--muted);font-size:18px}.ecosystem-points{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:38px}.ecosystem-point{padding:26px 24px 26px 0;border-right:1px solid var(--line)}.ecosystem-point:not(:first-child){padding-left:24px}.ecosystem-point:last-child{border-right:0}.ecosystem-point strong{display:block;margin-bottom:8px;color:var(--navy-950)}.ecosystem-point span{color:var(--muted);font-size:13px}
-@media(max-width:900px){.showcase-hero-grid,.ecosystem-copy{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.partner-feature-grid{grid-template-columns:repeat(3,1fr)}.partner-feature:nth-child(3){border-right:0}.partner-feature:nth-child(-n+3){border-bottom:1px solid var(--line)}.ecosystem-points{grid-template-columns:1fr}.ecosystem-point,.ecosystem-point:not(:first-child){padding:24px 0;border-right:0;border-bottom:1px solid var(--line)}.ecosystem-point:last-child{border-bottom:0}}
-@media(max-width:620px){.showcase-hero{padding:calc(var(--header-h) + 76px) 0 64px}.showcase-hero-media{min-height:300px}.showcase-hero-media img{min-height:300px}.showcase-card{min-height:360px}.partner-feature-grid{grid-template-columns:1fr}.partner-feature,.partner-feature:nth-child(3){border-right:0;border-bottom:1px solid var(--line)}.partner-feature:last-child{border-bottom:0}}
+.partner-feature:last-child{border-right:0}
+.partner-feature img{width:auto;height:auto;max-width:150px;max-height:58px;object-fit:contain;filter:grayscale(1);opacity:.72;transition:filter .2s ease,opacity .2s ease,transform .2s ease}
+.partner-feature:hover img{filter:none;opacity:1;transform:translateY(-2px)}
+.ecosystem-copy{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:start}
+.ecosystem-copy p{margin:0 0 20px;color:var(--muted);font-size:18px}
+.ecosystem-points{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:38px}
+.ecosystem-point{padding:26px 24px 26px 0;border-right:1px solid var(--line)}
+.ecosystem-point:not(:first-child){padding-left:24px}
+.ecosystem-point:last-child{border-right:0}
+.ecosystem-point strong{display:block;margin-bottom:8px;color:var(--navy-950)}
+.ecosystem-point span{color:var(--muted);font-size:13px}
+
+/* Global finishing layer -------------------------------------------------- */
+html{scroll-padding-top:calc(var(--header-h) + 18px)}
+body{overflow-x:hidden}
+img{height:auto}
+.hero-media img,.bento-card img,.service-media img,.story-panel-media img,.page-hero-card img,.showcase-card img,.showcase-hero-media img{height:100%}
+.asset-error{visibility:hidden}
+.asset-error-shell{background:linear-gradient(135deg,var(--navy-900),var(--navy-800))!important}
+
+/* Added Projects/Partners links make the primary nav denser. Keep the
+   desktop composition elegant instead of allowing a cramped intermediate
+   viewport before mobile navigation takes over. */
+@media(max-width:1280px) and (min-width:1081px){
+  .header-shell{grid-template-columns:190px 1fr auto;gap:20px}
+  .desktop-nav{gap:18px}
+  .desktop-nav>a,.nav-services-toggle{font-size:13px}
+  .header-cta{padding-inline:15px;font-size:13px}
+}
+
+/* Consistent current page visibility for links inserted by shared JS. */
+.desktop-nav>a[aria-current="page"],.mobile-panel a[aria-current="page"]{color:#fff}
+.mobile-panel a[aria-current="page"]{font-weight:800}
+
+/* Keyboard users should receive the same clarity as hover users. */
+.mega-col a:focus-visible,.footer a:focus-visible,.mobile-panel a:focus-visible,.text-link:focus-visible{outline:2px solid var(--blue-300);outline-offset:4px;border-radius:3px}
+
+/* Long technical labels must never force horizontal overflow. */
+.bento-content h3,.service-copy h2,.footer a,.mega-col a,.contact-detail strong,.showcase-card-content h2{overflow-wrap:anywhere}
+
+/* Content images use deliberate crops rather than stretching. */
+.page-hero-card,.service-media,.editorial-media,.story-panel-media,.showcase-hero-media,.showcase-card{isolation:isolate}
+.page-hero-card img,.service-media img,.editorial-media img,.story-panel-media img,.showcase-hero-media img,.showcase-card img{object-fit:cover}
+
+/* Avoid layout jumps when lazy-loaded content enters the page. */
+.service-media{min-height:420px}
+.story-panel-media{min-height:520px}
+.page-hero-card{min-height:360px}
+.partner-logo img,.partner-feature img{object-fit:contain}
+
+/* Clear disabled state during contact submission. */
+button:disabled{cursor:wait;opacity:.68;transform:none!important}
+
+@media(max-width:900px){
+  .showcase-hero-grid,.ecosystem-copy{grid-template-columns:1fr}
+  .showcase-grid{grid-template-columns:1fr}
+  .partner-feature-grid{grid-template-columns:repeat(3,1fr)}
+  .partner-feature:nth-child(3){border-right:0}
+  .partner-feature:nth-child(-n+3){border-bottom:1px solid var(--line)}
+  .ecosystem-points{grid-template-columns:1fr}
+  .ecosystem-point,.ecosystem-point:not(:first-child){padding:24px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .ecosystem-point:last-child{border-bottom:0}
+  .story-panel-media{min-height:420px}
+  .page-hero-card,.service-media{min-height:320px}
+}
+
+@media(max-width:620px){
+  .showcase-hero{padding:calc(var(--header-h) + 76px) 0 64px}
+  .showcase-hero-grid{gap:38px}
+  .showcase-hero-media{min-height:280px;border-radius:14px}
+  .showcase-hero-media img{min-height:280px}
+  .showcase-card{min-height:350px;border-radius:14px}
+  .showcase-card-content{padding:22px}
+  .partner-feature-grid{grid-template-columns:1fr}
+  .partner-feature,.partner-feature:nth-child(3){min-height:150px;border-right:0;border-bottom:1px solid var(--line)}
+  .partner-feature:last-child{border-bottom:0}
+  .story-panel-media{min-height:320px}
+  .page-hero-card,.service-media{min-height:260px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .showcase-card img,.partner-feature img{transition:none!important}
+}
