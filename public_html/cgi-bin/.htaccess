@@ -1,0 +1,35 @@
+# Existing hosting code – DON'T TOUCH
+Options -Indexes +ExecCGI
+AddHandler cgi-script .cgi .pl
+
+
+# ↓↓↓ new GZIP + CACHE code ↓↓↓
+
+# Enable GZIP Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/ld+json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Enable Browser Caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access 1 month"
+  ExpiresByType application/javascript "access 1 month"
+  ExpiresByType image/webp "access 1 year"
+  ExpiresByType image/jpeg "access 1 year"
+  ExpiresByType image/png "access 1 year"
+  ExpiresByType image/svg+xml "access 1 year"
+  ExpiresDefault "access 1 month"
+</IfModule>
