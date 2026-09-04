@@ -21,7 +21,8 @@ if (!empty($_POST['website'] ?? '')) {
 
 $name = clean_text($_POST['name'] ?? '', 120);
 $company = clean_text($_POST['company'] ?? '', 160);
-$email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+$email_raw = trim($_POST['email'] ?? '');
+$email = filter_var($email_raw, FILTER_VALIDATE_EMAIL);
 $phone = clean_text($_POST['phone'] ?? '', 60);
 $service = clean_text($_POST['service'] ?? '', 80);
 $city = clean_text($_POST['city'] ?? '', 120);
@@ -37,12 +38,12 @@ $allowed_services = [
     'civil' => 'Civil Works',
     'electrical' => 'Electrical Works',
     'telecom' => 'Telecommunications',
-    'it-works' => 'IT Works & Systems Development',
+    'it-works' => 'IT Infrastructure & Systems',
     'integration' => 'Systems Integration',
     'hvac' => 'HVAC Services',
-    'dg' => 'D.G Solutions',
+    'dg' => 'Diesel Generator & Backup Power',
     'fire' => 'Fire Safety & Alarm',
-    'managed' => 'Managed Services',
+    'managed' => 'Managed Infrastructure Services',
     'it' => 'Managed IT Services'
 ];
 $service_label = $allowed_services[$service] ?? 'General / Not specified';
