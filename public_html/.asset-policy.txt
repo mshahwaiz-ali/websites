@@ -1,1 +1,0 @@
-MHS website image policy: production pages use the curated WebP library in images/mhs-technologies-website-assets plus brand logos and technology ecosystem partner logos. Legacy photography folders were retired on 2026-09-04. Compatibility aliases under images/services-page contain only current curated imagery.
