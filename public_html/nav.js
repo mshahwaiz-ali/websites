@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
+  const header = document.querySelector("[data-site-header], .site-header");
   const menuToggle = document.querySelector(".menu-toggle");
   const mobilePanel = document.querySelector(".mobile-panel");
   const desktopServices = document.querySelector(".nav-services");
@@ -7,17 +8,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileServices = document.querySelector(".mobile-services");
   const mobileServicesToggle = document.querySelector(".mobile-services-toggle");
 
+  const syncHeader = () => {
+    if (!header) return;
+    header.classList.toggle("is-scrolled", window.scrollY > 28);
+  };
+
   const closeDesktopServices = () => {
     if (!desktopServices || !desktopServicesToggle) return;
     desktopServices.classList.remove("open");
     desktopServicesToggle.setAttribute("aria-expanded", "false");
   };
 
+  const setMenuIconState = (open) => {
+    if (!menuToggle) return;
+    menuToggle.classList.toggle("open", open);
+    const plainIcon = Array.from(menuToggle.childNodes).find(
+      (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+    );
+    if (plainIcon && !menuToggle.querySelector(".menu-toggle-lines")) {
+      plainIcon.textContent = open ? "×" : "☰";
+    }
+  };
+
   const closeMobileMenu = () => {
     if (!mobilePanel || !menuToggle) return;
     mobilePanel.classList.remove("open");
     menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.textContent = "☰";
+    menuToggle.setAttribute("aria-label", "Open navigation");
+    setMenuIconState(false);
     body.classList.remove("nav-locked");
   };
 
@@ -33,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.addEventListener("click", () => {
       const isOpen = mobilePanel.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.textContent = isOpen ? "×" : "☰";
+      menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+      setMenuIconState(isOpen);
       body.classList.toggle("nav-locked", isOpen);
     });
   }
@@ -42,6 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileServicesToggle.addEventListener("click", () => {
       const isOpen = mobileServices.classList.toggle("open");
       mobileServicesToggle.setAttribute("aria-expanded", String(isOpen));
+      const icon = mobileServicesToggle.querySelector("span");
+      if (icon) icon.textContent = isOpen ? "−" : "+";
     });
   }
 
@@ -57,16 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (mobilePanel) {
-    mobilePanel.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMobileMenu));
+    mobilePanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMobileMenu);
+    });
   }
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 1080) closeMobileMenu();
   });
 
+  window.addEventListener("scroll", syncHeader, { passive: true });
+  syncHeader();
+
   document.querySelectorAll(".service-accordion-item").forEach((item) => {
     const button = item.querySelector(".service-accordion-button");
-    if (!button) return;
+    const panel = item.querySelector(".service-accordion-panel");
+    if (!button || !panel) return;
+
+    const initialOpen = item.classList.contains("open");
+    button.setAttribute("aria-expanded", String(initialOpen));
+
     button.addEventListener("click", () => {
       const isOpen = item.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
@@ -74,11 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const capabilityTabs = document.querySelectorAll(".capability-tab");
-  const capabilityCards = document.querySelectorAll(".capability-card[data-group]");
+  const capabilityCards = document.querySelectorAll("[data-group].bento-card, .capability-card[data-group]");
   capabilityTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const filter = tab.dataset.filter;
-      capabilityTabs.forEach((node) => node.classList.toggle("active", node === tab));
+      capabilityTabs.forEach((node) => {
+        node.classList.toggle("active", node === tab);
+        node.setAttribute("aria-pressed", String(node === tab));
+      });
       capabilityCards.forEach((card) => {
         card.hidden = filter !== "all" && card.dataset.group !== filter;
       });
@@ -90,25 +124,31 @@ document.addEventListener("DOMContentLoaded", () => {
   serviceFilters.forEach((filterButton) => {
     filterButton.addEventListener("click", () => {
       const filter = filterButton.dataset.filter;
-      serviceFilters.forEach((node) => node.classList.toggle("active", node === filterButton));
+      serviceFilters.forEach((node) => {
+        node.classList.toggle("active", node === filterButton);
+        node.setAttribute("aria-pressed", String(node === filterButton));
+      });
       serviceGroups.forEach((group) => {
         group.hidden = filter !== "all" && group.dataset.group !== filter;
       });
     });
   });
 
-  const observer = "IntersectionObserver" in window
-    ? new IntersectionObserver((entries, instance) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("visible");
-          instance.unobserve(entry.target);
-        });
-      }, { threshold: 0.12 })
+  const revealObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -24px" }
+      )
     : null;
 
   document.querySelectorAll(".reveal").forEach((element) => {
-    if (observer) observer.observe(element);
+    if (revealObserver) revealObserver.observe(element);
     else element.classList.add("visible");
   });
 
